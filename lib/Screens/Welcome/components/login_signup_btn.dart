@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import '../../Login/login_screen.dart';
 
 class LoginAndSignupBtn extends StatelessWidget {
-  const LoginAndSignupBtn({
-    Key? key,
-  }) : super(key: key);
+  const LoginAndSignupBtn({Key? key,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +15,7 @@ class LoginAndSignupBtn extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return const LoginScreen();
+                  return const LoginScreen(title: 'kakao login',);
                 },
               ),
             );
