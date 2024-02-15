@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../Search/search_screen.dart';
 import 'kakao_login.dart';
 import 'main_view_model.dart';
 
@@ -22,7 +23,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _autoLogin() async {
     await viewModel.login();
-    setState(() {});
+    setState(() {
+      // 추가: 로그인이 성공하면 화면 전환
+      if (viewModel.isLogined) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => SearchScreen()), // SearchScreen으로 이동
+        );
+      }
+    });
   }
 
   @override
