@@ -45,8 +45,10 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            CircularProgressIndicator(),
+            SizedBox(height: 20),
             Text(
-              '${viewModel.isLogined}',
+              '로딩 중...',
               style: Theme.of(context).textTheme.headline4,
             ),
           ],
@@ -54,4 +56,5 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
 }
