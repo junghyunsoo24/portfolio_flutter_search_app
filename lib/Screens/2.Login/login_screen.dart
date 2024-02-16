@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../Main/main_screen.dart';
+import '../3.Main/main_screen.dart';
 import 'kakao_login.dart';
 import 'main_view_model.dart';
 

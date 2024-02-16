@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 
-import 'Screens/Welcome/welcome_screen.dart';
+import 'Screens/1.Welcome/welcome_screen.dart';
 import 'constants.dart';
 
 void main() {

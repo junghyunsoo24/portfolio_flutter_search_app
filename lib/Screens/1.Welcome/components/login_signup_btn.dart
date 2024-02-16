@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../Login/login_screen.dart';
+import '../../2.Login/login_screen.dart';
 
 class LoginAndSignupBtn extends StatelessWidget {
   const LoginAndSignupBtn({Key? key,}) : super(key: key);

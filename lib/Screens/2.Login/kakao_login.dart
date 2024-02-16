@@ -1,4 +1,4 @@
-import 'package:portfolio_flutter_search_app/Screens/Login/social_login.dart';
+import 'package:portfolio_flutter_search_app/Screens/2.Login/social_login.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 class KakaoLogin implements SocialLogin {

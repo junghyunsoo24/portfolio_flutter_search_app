@@ -1,5 +1,5 @@
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-import 'package:portfolio_flutter_search_app/Screens/Login/social_login.dart';
+import 'package:portfolio_flutter_search_app/Screens/2.Login/social_login.dart';
 
 class MainViewModel {
   final SocialLogin _socialLogin;
