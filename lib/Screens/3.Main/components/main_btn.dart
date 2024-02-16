@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
+import '../../4-1.Register/register_screen.dart';
+import '../../4-2.Search/search_screen.dart';
 
 class MainBtn extends StatelessWidget {
   const MainBtn({Key? key,}) : super(key: key);
