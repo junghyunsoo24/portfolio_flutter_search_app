@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../../background.dart';
 import '../../responsive.dart';
-import 'components/search_btn.dart';
-import 'components/search_image.dart';
+import 'components/Main_btn.dart';
+import 'components/main_image.dart';
 
-class SearchScreen extends StatelessWidget {
-  const SearchScreen({Key? key}) : super(key: key);
+class MainScreen extends StatelessWidget {
+  const MainScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class SearchScreen extends StatelessWidget {
 
               children: [
                 Expanded(
-                  child: SearchImage(),
+                  child: MainImage(),
                 ),
 
                 Expanded(
@@ -28,14 +28,14 @@ class SearchScreen extends StatelessWidget {
                     children: [
                       SizedBox(
                         width: 450,
-                        child: SearchBtn(),
+                        child: MainBtn(),
                       ),
                     ],
                   ),
                 ),
               ],
             ),
-            mobile: MobileSearchScreen(),
+            mobile: MobileMainScreen(),
           ),
         ),
       ),
@@ -43,8 +43,8 @@ class SearchScreen extends StatelessWidget {
   }
 }
 
-class MobileSearchScreen extends StatelessWidget {
-  const MobileSearchScreen({
+class MobileMainScreen extends StatelessWidget {
+  const MobileMainScreen({
     Key? key,
   }) : super(key: key);
 
@@ -53,13 +53,13 @@ class MobileSearchScreen extends StatelessWidget {
     return const Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        SearchImage(),
+        MainImage(),
         Row(
           children: [
             Spacer(),
             Expanded(
               flex: 8,
-              child: SearchBtn(),
+              child: MainBtn(),
             ),
             Spacer(),
           ],

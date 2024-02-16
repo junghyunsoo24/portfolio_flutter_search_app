@@ -3,8 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../constants.dart';
 
-class SearchImage extends StatelessWidget {
-  const SearchImage({
+class MainImage extends StatelessWidget {
+  const MainImage({
     Key? key,
   }) : super(key: key);
 

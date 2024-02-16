@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../Search/search_screen.dart';
+
+import '../Main/main_screen.dart';
 import 'kakao_login.dart';
 import 'main_view_model.dart';
 
@@ -28,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (viewModel.isLogined) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => SearchScreen()), // SearchScreen으로 이동
+          MaterialPageRoute(builder: (context) => MainScreen()), // SearchScreen으로 이동
         );
       }
     });

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
-import '../../Login/login_screen.dart';
 
-class SearchBtn extends StatelessWidget {
-  const SearchBtn({Key? key,}) : super(key: key);
+class MainBtn extends StatelessWidget {
+  const MainBtn({Key? key,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,21 +11,37 @@ class SearchBtn extends StatelessWidget {
       children: [
         ElevatedButton(
           onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return const RegisterScreen();
+                },
+              ),
+            );
           },
           child: Text(
-            "register".toUpperCase(),
+            "Register".toUpperCase(),
           ),
         ),
         const SizedBox(height: 16),
         ElevatedButton(
           onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return const SearchScreen();
+                },
+              ),
+            );
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: kPrimaryLightColor,
             elevation: 0,
           ),
           child: Text(
-            "search".toUpperCase(),
+            "Search".toUpperCase(),
             style: const TextStyle(color: Colors.black),
           ),
         ),
