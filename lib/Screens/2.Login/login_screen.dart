@@ -25,11 +25,10 @@ class _LoginScreenState extends State<LoginScreen> {
   void _autoLogin() async {
     await viewModel.login();
     setState(() {
-      // 추가: 로그인이 성공하면 화면 전환
       if (viewModel.isLogined) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => MainScreen()), // SearchScreen으로 이동
+          MaterialPageRoute(builder: (context) => const MainScreen()),
         );
       }
     });
@@ -45,8 +44,8 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            CircularProgressIndicator(),
-            SizedBox(height: 20),
+            const CircularProgressIndicator(),
+            const SizedBox(height: 20),
             Text(
               '로딩 중...',
               style: Theme.of(context).textTheme.headline4,
