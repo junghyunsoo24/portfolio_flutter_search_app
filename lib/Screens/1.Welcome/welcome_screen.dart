@@ -7,27 +7,23 @@ import 'components/welcome_image.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return const Background(
       child: SingleChildScrollView(
         child: SafeArea(
           child: Responsive(
-            desktop: Row(
+            desktop: Column(
               mainAxisAlignment: MainAxisAlignment.end,
-
               children: [
-                Expanded(
-                  child: WelcomeImage(),
-                ),
-
-                Expanded(
+                WelcomeImage(),
+                SizedBox(
+                  height: 65,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
-                        width: 450,
+                        width: 600,
                         child: LoginAndSignupBtn(),
                       ),
                     ],
@@ -36,6 +32,7 @@ class WelcomeScreen extends StatelessWidget {
               ],
             ),
             mobile: MobileWelcomeScreen(),
+            tablet: TabletWelcomeScreen(),
           ),
         ),
       ),
@@ -44,10 +41,7 @@ class WelcomeScreen extends StatelessWidget {
 }
 
 class MobileWelcomeScreen extends StatelessWidget {
-  const MobileWelcomeScreen({
-    Key? key,
-  }) : super(key: key);
-
+  const MobileWelcomeScreen({Key? key,}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return const Column(
@@ -63,6 +57,31 @@ class MobileWelcomeScreen extends StatelessWidget {
             ),
             Spacer(),
           ],
+        ),
+      ],
+    );
+  }
+}
+
+class TabletWelcomeScreen extends StatelessWidget {
+  const TabletWelcomeScreen({Key? key,}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        WelcomeImage(),
+        SizedBox(
+          height: 100,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 450,
+                child: LoginAndSignupBtn(),
+              ),
+            ],
+          ),
         ),
       ],
     );
