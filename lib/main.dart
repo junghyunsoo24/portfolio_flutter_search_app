@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
+import 'package:portfolio_flutter_search_app/responsive.dart';
 
 import 'Screens/1.Welcome/welcome_screen.dart';
 import 'constants.dart';
@@ -20,6 +21,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    if (Responsive.isDesktop(context)) {
+      print('현재 화면 크기: Desktop');
+    } else if (Responsive.isTablet(context)) {
+      print('현재 화면 크기: Tablet');
+    } else {
+      print('현재 화면 크기: Mobile');
+    }
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
