@@ -14,20 +14,17 @@ class MainScreen extends StatelessWidget {
       child: SingleChildScrollView(
         child: SafeArea(
           child: Responsive(
-            desktop: Row(
+            desktop: Column(
               mainAxisAlignment: MainAxisAlignment.end,
-
               children: [
-                Expanded(
-                  child: MainImage(),
-                ),
-
-                Expanded(
+                MainImage(),
+                SizedBox(
+                  height: 200,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
-                        width: 450,
+                        width: 600,
                         child: MainBtn(),
                       ),
                     ],
@@ -36,6 +33,7 @@ class MainScreen extends StatelessWidget {
               ],
             ),
             mobile: MobileMainScreen(),
+            tablet: TabletMainScreen(),
           ),
         ),
       ),
@@ -44,10 +42,7 @@ class MainScreen extends StatelessWidget {
 }
 
 class MobileMainScreen extends StatelessWidget {
-  const MobileMainScreen({
-    Key? key,
-  }) : super(key: key);
-
+  const MobileMainScreen({Key? key,}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return const Column(
@@ -63,6 +58,31 @@ class MobileMainScreen extends StatelessWidget {
             ),
             Spacer(),
           ],
+        ),
+      ],
+    );
+  }
+}
+
+class TabletMainScreen extends StatelessWidget {
+  const TabletMainScreen({Key? key,}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        MainImage(),
+        SizedBox(
+          height: 150,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 450,
+                child: MainBtn(),
+              ),
+            ],
+          ),
         ),
       ],
     );
