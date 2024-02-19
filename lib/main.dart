@@ -18,16 +18,8 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    if (Responsive.isDesktop(context)) {
-      print('현재 화면 크기: Desktop');
-    } else if (Responsive.isTablet(context)) {
-      print('현재 화면 크기: Tablet');
-    } else {
-      print('현재 화면 크기: Mobile');
-    }
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
