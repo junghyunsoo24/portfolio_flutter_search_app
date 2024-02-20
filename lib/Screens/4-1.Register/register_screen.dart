@@ -18,7 +18,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Future<void> _saveText(String text) async {
     final response = await http.post(
-      Uri.parse(UriHelper.getUri(context)),
+      Uri.parse(UriHelper.getRegisterUri(context)),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
