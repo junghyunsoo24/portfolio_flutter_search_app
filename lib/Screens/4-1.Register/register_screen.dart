@@ -1,23 +1,36 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:portfolio_flutter_search_app/uri_check.dart';
+import '../../responsive.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
-
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
 }
 
+class UriHelper {
+  static String getUri(BuildContext context) {
+    if (Responsive.isDesktop(context) || Responsive.isTablet(context)) {
+      return UriCheck.webUri;
+    } else {
+      return UriCheck.emulatorUri;
+    }
+  }
+}
+
 class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _textEditingController = TextEditingController();
-  Future<String>? _futureResponse;
+  Future<void>? _futureResponse;
 
   Future<void> _saveText(String text) async {
     final response = await http.post(
-      Uri.parse('http://192.168.219.102:3002/enrollText'),
+      Uri.parse(UriHelper.getUri(context)),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
@@ -26,10 +39,40 @@ class _RegisterScreenState extends State<RegisterScreen> {
       }),
     );
 
-    if (response.statusCode == 200) {
-      print('텍스트가 성공적으로 저장되었습니다.');
+    if(!mounted) return;
+
+    if (response.statusCode == 201) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('성공'),
+          content: const Text('텍스트가 성공적으로 저장되었습니다!'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('확인'),
+            ),
+          ],
+        ),
+      );
     } else {
-      print('텍스트 저장에 실패했습니다. 상태 코드: ${response.statusCode}');
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('실패'),
+          content: const Text('텍스트 저장에 실패했습니다.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('확인'),
+            ),
+          ],
+        ),
+      );
     }
   }
 
@@ -56,27 +99,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 final enteredText = _textEditingController.text;
                 if (enteredText.isNotEmpty) {
                   setState(() {
-                    _futureResponse = _saveText(enteredText) as Future<String>?;
+                    _futureResponse = _saveText(enteredText);
                   });
                 } else {
-                  print('텍스트를 입력하세요.');
+                  if (kDebugMode) {
+                    print('텍스트를 입력하세요.');
+                  }
                 }
               },
               child: const Text('저장'),
             ),
-            if (_futureResponse != null)
-              FutureBuilder<String>(
-                future: _futureResponse,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else {
-                    return Text('Response: ${snapshot.data}');
-                  }
-                },
-              ),
           ],
         ),
       ),
