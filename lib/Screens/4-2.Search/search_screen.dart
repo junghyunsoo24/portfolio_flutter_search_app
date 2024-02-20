@@ -14,101 +14,41 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _textEditingController = TextEditingController();
-  Future<void>? _futureResponse;
+  Future<List<dynamic>>? _futureResponse;
 
-  Future<void> _sBertResultText(String text) async {
+  Future<List<dynamic>> _sBertResultText(String text) async {
     final response = await http.post(
       Uri.parse(UriHelper.getSBertSearchUri(context)),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
       body: jsonEncode(<String, String>{
-        'text': text,
+        'query': text,
       }),
     );
 
-    if(!mounted) return;
-
     if (response.statusCode == 201) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('성공'),
-          content: const Text('텍스트를 성공적으로 불러왔습니다!'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('확인'),
-            ),
-          ],
-        ),
-      );
+      return json.decode(response.body);
     } else {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('실패'),
-          content: const Text('텍스트를 불러오지 못했습니다.'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('확인'),
-            ),
-          ],
-        ),
-      );
+      throw Exception('Failed to load data');
     }
   }
 
-  Future<void> _cosResultText(String text) async {
+  Future<List<dynamic>> _cosResultText(String text) async {
     final response = await http.post(
       Uri.parse(UriHelper.getCosSearchUri(context)),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
       body: jsonEncode(<String, String>{
-        'text': text,
+        'query': text,
       }),
     );
 
-    if(!mounted) return;
-
     if (response.statusCode == 201) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('성공'),
-          content: const Text('텍스트를 성공적으로 불러왔습니다!'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('확인'),
-            ),
-          ],
-        ),
-      );
+      return json.decode(response.body);
     } else {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('실패'),
-          content: const Text('텍스트를 불러오지 못했습니다.'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('확인'),
-            ),
-          ],
-        ),
-      );
+      throw Exception('Failed to load data');
     }
   }
 
@@ -143,7 +83,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   }
                 }
               },
-              child: const Text('sbert로 찾기'),
+              child: const Text('SBert'),
             ),
             const SizedBox(height: 16),
             ElevatedButton(
@@ -159,7 +99,35 @@ class _SearchScreenState extends State<SearchScreen> {
                   }
                 }
               },
-              child: const Text('다른 목적으로 찾기'),
+              child: const Text('Cos'),
+            ),
+            const SizedBox(height: 16),
+            Expanded(
+              child: FutureBuilder<List<dynamic>>(
+                future: _futureResponse,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('에러: ${snapshot.error}'));
+                  } else if (snapshot.hasData) {
+                    final List<dynamic> data = snapshot.data!;
+                    return ListView.builder(
+                      itemCount: data.length,
+                      itemBuilder: (context, index) {
+                        final document = data[index]['document'];
+                        final similarity = data[index]['similarity'];
+                        return ListTile(
+                          title: Text('$document'),
+                          subtitle: Text('Similarity: $similarity'),
+                        );
+                      },
+                    );
+                  } else {
+                    return const SizedBox();
+                  }
+                },
+              ),
             ),
           ],
         ),
