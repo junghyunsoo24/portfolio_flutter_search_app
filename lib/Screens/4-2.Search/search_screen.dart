@@ -1,28 +1,114 @@
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import '../../uri_helper.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
-
   @override
   _SearchScreenState createState() => _SearchScreenState();
 }
 
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _textEditingController = TextEditingController();
+  Future<void>? _futureResponse;
 
-  Future<void> _saveText(String text) async {
-    final url = Uri.parse('http://localhost:3000/enrollText');
+  Future<void> _sBertResultText(String text) async {
     final response = await http.post(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: {'text': text},
+      Uri.parse(UriHelper.getSBertSearchUri(context)),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(<String, String>{
+        'text': text,
+      }),
     );
 
-    if (response.statusCode == 200) {
-      print('텍스트가 성공적으로 저장되었습니다.');
+    if(!mounted) return;
+
+    if (response.statusCode == 201) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('성공'),
+          content: const Text('텍스트를 성공적으로 불러왔습니다!'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('확인'),
+            ),
+          ],
+        ),
+      );
     } else {
-      print('텍스트 저장에 실패했습니다. 상태 코드: ${response.statusCode}');
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('실패'),
+          content: const Text('텍스트를 불러오지 못했습니다.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('확인'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
+  Future<void> _cosResultText(String text) async {
+    final response = await http.post(
+      Uri.parse(UriHelper.getCosSearchUri(context)),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(<String, String>{
+        'text': text,
+      }),
+    );
+
+    if(!mounted) return;
+
+    if (response.statusCode == 201) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('성공'),
+          content: const Text('텍스트를 성공적으로 불러왔습니다!'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('확인'),
+            ),
+          ],
+        ),
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('실패'),
+          content: const Text('텍스트를 불러오지 못했습니다.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('확인'),
+            ),
+          ],
+        ),
+      );
     }
   }
 
@@ -48,12 +134,32 @@ class _SearchScreenState extends State<SearchScreen> {
               onPressed: () {
                 final enteredText = _textEditingController.text;
                 if (enteredText.isNotEmpty) {
-                  _saveText(enteredText);
+                  setState(() {
+                    _futureResponse = _sBertResultText(enteredText);
+                  });
                 } else {
-                  print('텍스트를 입력하세요.');
+                  if (kDebugMode) {
+                    print('찾을 텍스트를 입력하세요.');
+                  }
                 }
               },
-              child: const Text('저장'),
+              child: const Text('sbert로 찾기'),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                final enteredText = _textEditingController.text;
+                if (enteredText.isNotEmpty) {
+                  setState(() {
+                    _futureResponse = _cosResultText(enteredText);
+                  });
+                } else {
+                  if (kDebugMode) {
+                    print('찾을 텍스트를 입력하세요.');
+                  }
+                }
+              },
+              child: const Text('다른 목적으로 찾기'),
             ),
           ],
         ),
