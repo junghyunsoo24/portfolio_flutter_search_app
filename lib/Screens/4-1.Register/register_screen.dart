@@ -7,21 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:portfolio_flutter_search_app/uri_check.dart';
 import '../../responsive.dart';
+import '../4-2.Search/search_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
-}
-
-class UriHelper {
-  static String getUri(BuildContext context) {
-    if (Responsive.isDesktop(context) || Responsive.isTablet(context)) {
-      return UriCheck.webUri;
-    } else {
-      return UriCheck.emulatorUri;
-    }
-  }
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
